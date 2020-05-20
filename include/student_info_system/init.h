@@ -1,0 +1,6 @@
+#ifndef STUDENT_INFO_SYSTEM_INIT_H
+#define STUDENT_INFO_SYSTEM_INIT_H
+
+int init();
+
+#endif // STUDENT_INFO_SYSTEM_INIT_H
