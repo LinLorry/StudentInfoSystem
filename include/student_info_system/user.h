@@ -22,10 +22,11 @@ struct UserInfo
 };
 
 typedef struct UserInfo user_info;
+typedef const struct UserInfo const_user_info;
 
 int init_user_infos(FILE *fp, const header *head);
 
-const user_info *get_user_infos();
+const_user_info *get_user_infos();
 
 unsigned long get_user_number();
 

@@ -33,7 +33,7 @@ int init_user_infos(FILE *fp, const header *head)
     }
     read = fread(user_infos, sizeof(user_info), tmp, fp);
 
-    if (tmp * sizeof(user_info) != read)
+    if (tmp != read)
     {
         fprintf(stderr, "[Init user info]\tuser number error.\n");
         free(user_infos);
@@ -48,7 +48,7 @@ int init_user_infos(FILE *fp, const header *head)
     return 0;
 }
 
-const user_info *get_user_infos()
+const_user_info *get_user_infos()
 {
     return user_infos;
 }
@@ -69,7 +69,7 @@ int expand_user_infos()
         perror("[Expand user info]\tmalloc user info memory failed: ");
         return -1;
     }
-    memcpy(tmp, user_infos, user_number * sizeof(user_number));
+    memcpy(tmp, user_infos, user_number * sizeof(user_info));
 
     free(user_infos);
     user_infos = tmp;
@@ -120,7 +120,7 @@ int delete_user(const unsigned long id)
         position++;
     }
 
-    if (user_info_end == user_info_p)
+    if (user_info_end == user_info_p && id != user_info_p->id)
     {
         fprintf(stderr,
                 "[Delete user]\t"
@@ -129,7 +129,8 @@ int delete_user(const unsigned long id)
         return -1;
     }
 
-    memcpy(user_info_p, user_info_p + 1, user_number - position - 1);
+    memcpy(user_info_p, user_info_p + 1, (user_number - position) * sizeof(user_info));
+    user_number--;
 
     return 0;
 }
@@ -155,7 +156,7 @@ int update_user(
         user_info_p++;
     }
 
-    if (user_info_end == user_info_p)
+    if (user_info_end == user_info_p && id != user_info_p->id)
     {
         fprintf(stderr,
                 "[Update user]\t"
