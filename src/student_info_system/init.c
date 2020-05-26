@@ -4,6 +4,7 @@
 
 #include <student_info_system/base.h>
 #include <student_info_system/init.h>
+#include <student_info_system/user.h>
 
 int init()
 {
@@ -13,7 +14,7 @@ int init()
         0, sizeof(header) + sizeof(user_info),
         0, sizeof(header) + sizeof(user_info),
     };
-    user_info admin_info = { 1, "", "", };
+    user_info admin_info = { 1, 1, "", "", };
 
     int tmp;
     size_t index = 0;
