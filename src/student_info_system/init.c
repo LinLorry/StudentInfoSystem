@@ -48,6 +48,8 @@ int init()
     }
     admin_info.username[index] = '\0';
 
+    index = 0;
+
     printf("Please input admin password: ");
     while (index < PASSWORD_MAX_LENGTH && (tmp = getchar()) != '\n')
         admin_info.password[index++] = (char)tmp;
@@ -59,8 +61,8 @@ int init()
 
         index = 0;
 
-        fprintf(stderr, "Username length must less then %d\n", PASSWORD_MAX_LENGTH);
-        printf("Please input username again: ");
+        fprintf(stderr, "Password length must less then %d\n", PASSWORD_MAX_LENGTH);
+        printf("Please input password again: ");
         while (index < PASSWORD_MAX_LENGTH && (tmp = getchar()) != '\n')
             admin_info.password[index++] = (char)tmp;
     }
