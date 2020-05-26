@@ -10,7 +10,10 @@
 #define CLEAR()          \
     printf("\033[2J");   \
     printf("\033[0;0H"); \
-    printf("\n\n\n")
+
+#define CLEAR_STDIN(input) \
+    if (input != '\n')     \
+        while (getchar() != '\n')
 
 #define DATA_FILE_NAME "data.dat"
 #define DATA_TMP_FILE_NAME "data.dat.tmp"
