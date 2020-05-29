@@ -11,6 +11,6 @@ struct Menu
 
 typedef struct Menu menu;
 
-int show_menu(menu *menus, size_t menu_num, char *exist_str);
+int show_menu(const menu *menus, size_t menu_num, char *exist_str);
 
 #endif // STUDENT_INFO_SYSTEM_UTIL_H

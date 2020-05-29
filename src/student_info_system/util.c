@@ -4,7 +4,7 @@
 #include <student_info_system/base.h>
 #include <student_info_system/util.h>
 
-int show_menu(menu *menus, size_t menu_num, char *exist_str)
+int show_menu(const menu *menus, size_t menu_num, char *exist_str)
 {
     int tmp;
     int choose = 0;
