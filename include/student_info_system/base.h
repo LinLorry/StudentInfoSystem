@@ -26,4 +26,8 @@ struct Header
 
 typedef struct Header header;
 
+int open_system(const char *username, const char *password);
+
+int close_system();
+
 #endif // STUDENT_INFO_SYSTEM_BASE_H

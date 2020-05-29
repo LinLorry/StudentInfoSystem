@@ -1,5 +1,6 @@
 add_library(
     student_info_system
+    student_info_system/base.c
     student_info_system/util.c
     student_info_system/init.c
     student_info_system/user.c
