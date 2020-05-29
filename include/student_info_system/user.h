@@ -13,6 +13,9 @@
 
 #define EXPAND_USER_INFOS_SIZE 5
 
+#define USER_LEVEL_VALUE 0
+#define ADMIN_LEVEL_VALUE 1
+
 struct UserInfo
 {
     unsigned long id;

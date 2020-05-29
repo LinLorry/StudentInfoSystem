@@ -14,7 +14,7 @@ int init()
         0, sizeof(header) + sizeof(user_info),
         0, sizeof(header) + sizeof(user_info),
     };
-    user_info admin_info = { 1, 1, "", "", };
+    user_info admin_info = { 1, ADMIN_LEVEL_VALUE, "", "", };
 
     int tmp;
     size_t index = 0;
