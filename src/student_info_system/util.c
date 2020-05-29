@@ -52,3 +52,33 @@ int show_menu(const menu *menus, size_t menu_num, char *exist_str)
 
     return 0;
 }
+
+int input_str(
+    char *str, const unsigned int max_length,
+    const char *first_remind,
+    const char *last_remind,
+    const char *warn_remind
+)
+{
+    int tmp;
+    size_t index = 0;
+    printf(first_remind);
+    while (index < max_length && (tmp = getchar()) != '\n')
+        str[index++] = (char)tmp;
+
+    while (index == max_length && getchar() != '\n')
+    {
+        while (getchar() != '\n')
+            continue;
+
+        index = 0;
+
+        fprintf(stderr, warn_remind);
+        printf(last_remind);
+        while (index < max_length && (tmp = getchar()) != '\n')
+            str[index++] = (char)tmp;
+    }
+    str[index] = '\0';
+
+    return 0;
+}
