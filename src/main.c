@@ -28,7 +28,6 @@ int main(int argc, char *args[])
     {
         if (open_system(args[1], args[2]))
         {
-            printf("username: %s, password: %s\n", args[1], args[2]);
             fprintf(stderr, "[Login]: Access denied for user '%s'\n", args[1]);
             return -1;
         }
@@ -51,13 +50,16 @@ int user_manage();
 
 int student_manage();
 
+int course_manage();
+
 int main_view()
 {
-    const menu menus[2] = {
+    const menu menus[3] = {
         {"user manage", user_manage},
-        {"student manage", student_manage}
+        {"student manage", student_manage},
+        {"course manage", course_manage}
     };
-    return show_menu(menus, 2, NULL);
+    return show_menu(menus, 3, NULL);
 }
 
 int show_user();
@@ -351,6 +353,139 @@ int remove_student()
     if (!delete_student(id))
     {
         printf("Delete student success!\n");
+    }
+
+    printf("Press any key continue.");
+    CLEAR_STDIN();
+
+    return 0;
+}
+int show_course();
+
+int create_course();
+
+int remove_course();
+
+int course_manage()
+{
+    const menu menus[] = {
+        {"show courses", show_course},
+        {"create course", create_course},
+        {"remove course", remove_course}
+    };
+
+    if (ADMIN_LEVEL_VALUE == get_current_level())
+    {
+        return show_menu(menus, 3, NULL);
+    }
+    else
+    {
+        return show_menu(menus, 1, NULL);
+    }
+}
+
+int show_course()
+{
+    const unsigned long course_number = get_course_number();
+    const_course *courses = get_courses();
+    const_course *course_end = courses + course_number;
+    const_course *course_p;
+    CLEAR();
+
+    if (course_number == 0)
+    {
+        printf("Don't have course!\n");
+    }
+    else
+    {
+        printf("+-----------------+\n");
+        printf("| Id \t   Name   |\n");
+        printf("+-----------------+\n");
+
+        for (course_p = courses; course_p != course_end; ++course_p)
+        {
+            printf("|%4ld\t%10s|\n", course_p->id, course_p->name);
+        }
+        printf("+-----------------+\n");
+    }
+
+    printf("Press any key continue.");
+    CLEAR_STDIN();
+
+    return 0;
+}
+
+int create_course()
+{
+    char tmp_str[256];
+    size_t index;
+    char name[STUDENT_NAME_BUFFER_SIZE];
+
+    CLEAR();
+
+    sprintf(tmp_str, "Student name length must less then %d\n", STUDENT_NAME_MAX_LENGTH);
+    input_str(
+        name, STUDENT_NAME_MAX_LENGTH,
+        "Please input course name: ",
+        "Please input course name again: ",
+        tmp_str
+    );
+
+    if (!add_course(name))
+    {
+        printf("Create course success\n");
+    }
+
+    printf("Press any key continue.");
+    CLEAR_STDIN();
+
+    return 0;
+}
+
+int remove_course()
+{
+    const unsigned long course_number = get_course_number();
+    const_course *const courses = get_courses();
+    const_course *const course_end = courses + course_number;
+    const_course *course_p;
+
+    int tmp;
+    long id;
+
+    CLEAR();
+
+    if (course_number == 0)
+    {
+        printf("Don't have course!\nPress any key continue.");
+        CLEAR_STDIN();
+        return 0;
+    }
+
+    printf("+-----------------+\n");
+    printf("| Id \t   Name   |\n");
+    printf("+-----------------+\n");
+
+    for (course_p = courses; course_p != course_end; ++course_p)
+    {
+        printf("|%4ld\t%10s|\n", course_p->id, course_p->name);
+    }
+    printf("+-----------------+\n");
+
+    printf("Please input course id which you want to remove: ");
+    tmp = scanf("%ld", &id);
+    CLEAR_STDIN();
+
+    while (tmp != 1 || id < 1)
+    {
+        printf("Please input valid id: ");
+
+        tmp = scanf("%ld", &id);
+        CLEAR_STDIN();
+    }
+
+    if (!delete_course(id))
+    {
+        printf("Delete course success!\n");
     }
 
     printf("Press any key continue.");

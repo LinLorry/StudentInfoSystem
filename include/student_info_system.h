@@ -6,5 +6,6 @@
 #include <student_info_system/init.h>
 #include <student_info_system/user.h>
 #include <student_info_system/student.h>
+#include <student_info_system/course.h>
 
 #endif // STUDENT_INFO_SYSTEM_H
