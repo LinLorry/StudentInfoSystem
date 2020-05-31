@@ -4,6 +4,7 @@
 #include <errno.h>
 
 #include <student_info_system/base.h>
+#include <student_info_system/user.h>
 #include <student_info_system/student.h>
 
 unsigned long student_number = 0;
@@ -16,7 +17,7 @@ int init_student_infos(FILE *fp, const header *head)
     const unsigned long tmp = head->student_number;
     const unsigned long original_position = ftell(fp);
 
-    if (fseek(fp, sizeof(header), SEEK_SET))
+    if (fseek(fp, sizeof(header) + head->user_number * sizeof(user_info), SEEK_SET))
     {
         perror("[Init students]\tseek file position failed: ");
         fseek(fp, original_position, SEEK_SET);
