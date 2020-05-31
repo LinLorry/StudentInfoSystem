@@ -4,7 +4,7 @@
 
 #include <student_info_system/base.h>
 #include <student_info_system/init.h>
-#include <student_info_system/user.h>
+#include <student_info_system/types.h>
 
 int init()
 {

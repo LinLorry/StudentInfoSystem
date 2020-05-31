@@ -14,20 +14,6 @@
 #define DATA_FILE_NAME "data.dat"
 #define DATA_TMP_FILE_NAME "data.dat.tmp"
 
-struct Header
-{
-    unsigned long user_number;
-    unsigned long user_list_index;
-
-    unsigned long student_number;
-    unsigned long student_list;
-
-    unsigned long student_grade_number;
-    unsigned long student_grade_list;
-};
-
-typedef struct Header header;
-
 int open_system(const char *username, const char *password);
 
 unsigned char get_current_level();

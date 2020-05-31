@@ -4,21 +4,7 @@
 #include <stdio.h>
 
 #include <student_info_system/base.h>
-
-#define STUDENT_NAME_BUFFER_SIZE 256
-
-#define STUDENT_NAME_MAX_LENGTH STUDENT_NAME_BUFFER_SIZE - 1
-
-#define EXPAND_STUDENT_SIZE 5
-
-struct StudentInfo
-{
-    unsigned long id;
-    char name[STUDENT_NAME_BUFFER_SIZE];
-};
-
-typedef struct StudentInfo student_info;
-typedef const struct StudentInfo const_student_info;
+#include <student_info_system/types.h>
 
 int init_student_infos(FILE *fp, const header *head);
 

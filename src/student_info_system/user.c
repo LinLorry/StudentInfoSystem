@@ -4,6 +4,7 @@
 #include <errno.h>
 
 #include <student_info_system/base.h>
+#include <student_info_system/types.h>
 #include <student_info_system/user.h>
 
 unsigned long user_number = 0;
