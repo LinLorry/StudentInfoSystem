@@ -54,6 +54,10 @@ int open_system(const char *username, const char *password)
     return 0;
 }
 
+unsigned char get_current_level() { return login_user.level; }
+
+unsigned long get_current_id() { return login_user.id; }
+
 int close_system()
 {
     if (fclose(fp))

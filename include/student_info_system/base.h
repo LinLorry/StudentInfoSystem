@@ -30,6 +30,10 @@ typedef struct Header header;
 
 int open_system(const char *username, const char *password);
 
+unsigned char get_current_level();
+
+unsigned long get_current_id();
+
 int close_system();
 
 #endif // STUDENT_INFO_SYSTEM_BASE_H
