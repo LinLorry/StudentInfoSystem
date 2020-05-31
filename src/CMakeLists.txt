@@ -6,6 +6,7 @@ add_library(
     student_info_system/user.c
     student_info_system/student.c
     student_info_system/course.c
+    student_info_system/grade.c
 )
 
 add_executable(main main.c)

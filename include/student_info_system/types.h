@@ -24,6 +24,8 @@
 
 #define EXPAND_COURSE_SIZE 5
 
+#define EXPAND_GRADE_SIZE 5
+
 struct Header
 {
     unsigned long user_number;
@@ -35,8 +37,8 @@ struct Header
     unsigned long course_number;
     unsigned long course_list_index;
 
-    unsigned long student_grade_number;
-    unsigned long student_grade_list_index;
+    unsigned long grade_number;
+    unsigned long grade_list_index;
 };
 
 struct UserInfo
@@ -59,6 +61,14 @@ struct Course
     char name[COURSE_NAME_BUFFER_SIZE];
 };
 
+struct Grade
+{
+    unsigned long student_id;
+    unsigned long course_id;
+
+    double value;
+};
+
 typedef struct Header header;
 
 typedef struct UserInfo user_info;
@@ -69,5 +79,8 @@ typedef const struct StudentInfo const_student_info;
 
 typedef struct Course course;
 typedef const struct Course const_course;
+
+typedef struct Grade grade;
+typedef const struct Grade const_grade;
 
 #endif // STUDENT_INFO_SYSTEM_TYPES_H
