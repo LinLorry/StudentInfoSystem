@@ -5,14 +5,22 @@
 
 #include <student_info_system/base.h>
 #include <student_info_system/user.h>
+#include <student_info_system/student.h>
 
 FILE *fp;
 header heade;
 
 user_info login_user = {0, 0, "", ""};
 
+void free_all()
+{
+    free_user_infos();
+    free_student_infos();
+}
+
 int open_system(const char *username, const char *password)
 {
+    int tmp;
     unsigned long user_number;
     const_user_info *user_infos;
     const_user_info *user_info_p;
@@ -26,7 +34,15 @@ int open_system(const char *username, const char *password)
 
     fread(&heade, sizeof(header), 1, fp);
 
-    init_user_infos(fp, &heade);
+    tmp = init_user_infos(fp, &heade);
+
+    if (tmp)
+    {
+        fprintf(stderr, "[Open system] init user info fail.\n");
+        fclose(fp);
+        free_user_infos();
+        exit(EXIT_FAILURE);
+    }
 
     user_number = get_user_number();
     user_infos = get_user_infos();
@@ -50,6 +66,14 @@ int open_system(const char *username, const char *password)
     {
         login_user = *user_info_p;
     }
+    tmp = init_student_infos(fp, &heade);
+    if (tmp)
+    {
+        fprintf(stderr, "[Open system] init student info fail.\n");
+        fclose(fp);
+        free_all();
+        exit(EXIT_FAILURE);
+    }
 
     return 0;
 }
@@ -63,7 +87,7 @@ int close_system()
     if (fclose(fp))
     {
         perror("[Close system]\tClose data file error: ");
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     if ((fp = fopen(DATA_TMP_FILE_NAME, "wb")) == NULL)
@@ -71,29 +95,47 @@ int close_system()
         perror("[Close system]\t"
                "Open data tmp file failed: ");
         free_user_infos();
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     heade.user_number = get_user_number();
+    heade.student_number = get_student_number();
 
-    fwrite(&heade, sizeof(header), 1, fp);
-    fwrite(get_user_infos(), sizeof(user_info), get_user_number(), fp);
+    if (fwrite(&heade, sizeof(header), 1, fp) != 1)
+    {
+        fprintf(stderr, "[Close system]\twrite head fail: %s\n", strerror(ferror(fp)));
+        free_all();
+        return -1;
+    }
+    if (fwrite(get_user_infos(), sizeof(user_info), heade.user_number, fp) != get_user_number())
+    {
+        fprintf(stderr, "[Close system]\twrite user info fail: %s\n", strerror(ferror(fp)));
+        free_all();
+        return -1;
+    }
+    if (fwrite(get_students(), sizeof(student_info), heade.student_number, fp) != get_student_number())
+    {
+        fprintf(stderr, "[Close system]\twrite student info fail: %s\n", strerror(ferror(fp)));
+        free_all();
+        return -1;
+    }
 
     if (fclose(fp))
     {
         perror("[Close system]\t"
                "Close tmp file error: ");
-        free_user_infos();
-        exit(EXIT_FAILURE);
+        free_all();
+        return -1;
     }
 
     if (rename(DATA_TMP_FILE_NAME, DATA_FILE_NAME))
     {
         perror("[Close system]\t"
                "Rename data tmp file to data file failed: ");
-        free_user_infos();
-        exit(EXIT_FAILURE);
+        free_all();
+        return -1;
     }
 
-    free_user_infos();
+    free_all();
+    return 0;
 }
