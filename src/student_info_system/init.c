@@ -36,8 +36,7 @@ int init()
 
     while (index == USERNAME_MAX_LENGTH && getchar() != '\n')
     {
-        while (getchar() != '\n')
-            continue;
+        CLEAR_STDIN();
 
         index = 0;
 
@@ -56,8 +55,7 @@ int init()
 
     while (index == PASSWORD_MAX_LENGTH && getchar() != '\n')
     {
-        while (getchar() != '\n')
-            continue;
+        CLEAR_STDIN();
 
         index = 0;
 

@@ -5,8 +5,10 @@
     printf("\033[2J"); \
     printf("\033[0;0H");
 
-#define CLEAR_STDIN(input) \
-    if (input != '\n')     \
+#define CLEAR_STDIN() while (getchar() != '\n')
+
+#define CLEAR_STDIN_WITH_PRE(input) \
+    if (input != '\n')              \
         while (getchar() != '\n')
 
 #define DATA_FILE_NAME "data.dat"

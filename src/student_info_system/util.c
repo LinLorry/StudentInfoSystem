@@ -33,7 +33,7 @@ int show_menu(const menu *menus, size_t menu_num, char *exist_str)
         while (1)
         {
             choose = getchar();
-            CLEAR_STDIN(choose);
+            CLEAR_STDIN_WITH_PRE(choose);
             choose -= '1';
 
             if (choose < menu_num && choose >= 0)
@@ -68,8 +68,7 @@ int input_str(
 
     while (index == max_length && getchar() != '\n')
     {
-        while (getchar() != '\n')
-            continue;
+        CLEAR_STDIN();
 
         index = 0;
 

@@ -20,8 +20,7 @@ int main(int argc, char *args[])
 
         if (input == 'y' || input == 'Y')
         {
-            while (getchar() != '\n')
-                continue;
+            CLEAR_STDIN();
             return init();
         }
     }
@@ -97,8 +96,7 @@ int show_user()
     printf("+-------------------------+\n");
 
     printf("Press any key continue.");
-    while (getchar() != '\n')
-        continue;
+    CLEAR_STDIN();
 
     return 0;
 }
@@ -117,7 +115,7 @@ int create_user()
     printf("What type user you want to create(Admin or User)? [a/U]: ");
     tmp = getchar();
 
-    CLEAR_STDIN(tmp);
+    CLEAR_STDIN_WITH_PRE(tmp);
 
     if (tmp == 'a' || tmp == 'A')
     {
@@ -149,8 +147,7 @@ int create_user()
     }
 
     printf("Create user success\nPress any key continue.");
-    while (getchar() != '\n')
-        continue;
+    CLEAR_STDIN();
 
     return 0;
 }
