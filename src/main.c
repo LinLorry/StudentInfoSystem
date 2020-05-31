@@ -49,12 +49,15 @@ int main(int argc, char *args[])
 
 int user_manage();
 
+int student_manage();
+
 int main_view()
 {
-    const menu menus[1] = {
-        {"user manage", user_manage}
+    const menu menus[2] = {
+        {"user manage", user_manage},
+        {"student manage", student_manage}
     };
-    return show_menu(menus, 1, NULL);
+    return show_menu(menus, 2, NULL);
 }
 
 int show_user();
@@ -90,6 +93,8 @@ int show_user()
 
     const char admin_str[] = "Admin";
     const char user_str[] = "User";
+
+    CLEAR();
 
     printf("+-------------------------+\n");
     printf("| Id \t Type \t Username |\n");
@@ -151,8 +156,7 @@ int create_user()
         "Please input new user password again: ",
         tmp_str);
 
-    tmp = add_user(level, username, password);
-    if (!tmp)
+    if (!add_user(level, username, password))
     {
         printf("Create user success\n");
     }
@@ -160,7 +164,7 @@ int create_user()
     printf("Press any key continue.");
     CLEAR_STDIN();
 
-    return tmp;
+    return 0;
 }
 
 int remove_user()
@@ -209,8 +213,7 @@ int remove_user()
         CLEAR_STDIN();
     }
 
-    tmp = delete_user(id);
-    if (!tmp)
+    if (!delete_user(id))
     {
         printf("Delete user success!\n");
     }
@@ -218,5 +221,139 @@ int remove_user()
     printf("Press any key continue.");
     CLEAR_STDIN();
 
-    return tmp;
+    return 0;
+}
+
+int show_student();
+
+int create_student();
+
+int remove_student();
+
+int student_manage()
+{
+    const menu menus[] = {
+        {"show students", show_student},
+        {"create student", create_student},
+        {"remove student", remove_student}
+    };
+
+    if (ADMIN_LEVEL_VALUE == get_current_level())
+    {
+        return show_menu(menus, 3, NULL);
+    }
+    else
+    {
+        return show_menu(menus, 1, NULL);
+    }
+}
+
+int show_student()
+{
+    const unsigned long student_number = get_student_number();
+    const_student_info *students = get_students();
+    const_student_info *student_end = students + student_number;
+    const_student_info *studnet_p;
+    CLEAR();
+
+    if (student_number == 0)
+    {
+        printf("Don't have student!\n");
+    }
+    else
+    {
+        printf("+-----------------+\n");
+        printf("| Id \t   Name   |\n");
+        printf("+-----------------+\n");
+
+        for (studnet_p = students; studnet_p != student_end; ++studnet_p)
+        {
+            printf("|%4ld\t%10s|\n", studnet_p->id, studnet_p->name);
+        }
+        printf("+-----------------+\n");
+    }
+
+    printf("Press any key continue.");
+    CLEAR_STDIN();
+
+    return 0;
+}
+
+int create_student()
+{
+    char tmp_str[256];
+    size_t index;
+    char name[STUDENT_NAME_BUFFER_SIZE];
+
+    CLEAR();
+
+    sprintf(tmp_str, "Student name length must less then %d\n", STUDENT_NAME_MAX_LENGTH);
+    input_str(
+        name, STUDENT_NAME_MAX_LENGTH,
+        "Please input student name: ",
+        "Please input student name again: ",
+        tmp_str
+    );
+
+    if (!add_student(name))
+    {
+        printf("Create student success\n");
+    }
+
+    printf("Press any key continue.");
+    CLEAR_STDIN();
+
+    return 0;
+}
+
+int remove_student()
+{
+    const unsigned long student_number = get_student_number();
+    const_student_info *const students = get_students();
+    const_student_info *const student_end = students + student_number;
+    const_student_info *studnet_p;
+
+    int tmp;
+    long id;
+
+    CLEAR();
+
+    if (student_number == 0)
+    {
+        printf("Don't have student!\nPress any key continue.");
+        CLEAR_STDIN();
+        return 0;
+    }
+
+    printf("+-----------------+\n");
+    printf("| Id \t   Name   |\n");
+    printf("+-----------------+\n");
+
+    for (studnet_p = students; studnet_p != student_end; ++studnet_p)
+    {
+        printf("|%4ld\t%10s|\n", studnet_p->id, studnet_p->name);
+    }
+    printf("+-----------------+\n");
+
+    printf("Please input student id which you want to remove: ");
+    tmp = scanf("%ld", &id);
+    CLEAR_STDIN();
+
+    while (tmp != 1 || id < 1)
+    {
+        printf("Please input valid id: ");
+
+        tmp = scanf("%ld", &id);
+        CLEAR_STDIN();
+    }
+
+    if (!delete_student(id))
+    {
+        printf("Delete student success!\n");
+    }
+
+    printf("Press any key continue.");
+    CLEAR_STDIN();
+
+    return 0;
 }
