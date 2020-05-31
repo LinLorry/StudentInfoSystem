@@ -253,7 +253,8 @@ int show_student()
     const unsigned long student_number = get_student_number();
     const_student_info *students = get_students();
     const_student_info *student_end = students + student_number;
-    const_student_info *studnet_p;
+    const_student_info *student_p;
+
     CLEAR();
 
     if (student_number == 0)
@@ -266,9 +267,9 @@ int show_student()
         printf("| Id \t   Name   |\n");
         printf("+-----------------+\n");
 
-        for (studnet_p = students; studnet_p != student_end; ++studnet_p)
+        for (student_p = students; student_p != student_end; ++student_p)
         {
-            printf("|%4ld\t%10s|\n", studnet_p->id, studnet_p->name);
+            printf("|%4ld\t%10s|\n", student_p->id, student_p->name);
         }
         printf("+-----------------+\n");
     }
@@ -311,7 +312,7 @@ int remove_student()
     const unsigned long student_number = get_student_number();
     const_student_info *const students = get_students();
     const_student_info *const student_end = students + student_number;
-    const_student_info *studnet_p;
+    const_student_info *student_p;
 
     int tmp;
     long id;
@@ -329,9 +330,9 @@ int remove_student()
     printf("| Id \t   Name   |\n");
     printf("+-----------------+\n");
 
-    for (studnet_p = students; studnet_p != student_end; ++studnet_p)
+    for (student_p = students; student_p != student_end; ++student_p)
     {
-        printf("|%4ld\t%10s|\n", studnet_p->id, studnet_p->name);
+        printf("|%4ld\t%10s|\n", student_p->id, student_p->name);
     }
     printf("+-----------------+\n");
 
