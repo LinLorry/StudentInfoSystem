@@ -90,8 +90,8 @@ int add_user(const unsigned char level, const char *username, const char *passwo
         fprintf(stderr, "[Add user]\tadd user fail.\n");
         return tmp;
     }
-    last_user = user_infos + (user_number - 1);
     user_info_p = user_infos + user_number;
+    last_user = user_info_p - 1;
 
     user_number++;
     user_info_p->id = last_user->id + 1;

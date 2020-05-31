@@ -90,8 +90,8 @@ int add_student(const char *name)
         fprintf(stderr, "[Add student]\tadd student fail.\n");
         return tmp;
     }
-    last_student = students + (student_number - 1);
     student_p = students + student_number;
+    last_student = student_p - 1;
 
     student_number++;
     student_p->id = last_student->id + 1;
