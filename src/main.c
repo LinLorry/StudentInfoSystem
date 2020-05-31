@@ -71,7 +71,14 @@ int user_manage()
         {"remove user", remove_user}
     };
 
-    return show_menu(menus, 3, NULL);
+    if (ADMIN_LEVEL_VALUE == get_current_level())
+    {
+        return show_menu(menus, 3, NULL);
+    }
+    else
+    {
+        return show_menu(menus, 1, NULL);
+    }
 }
 
 int show_user()
