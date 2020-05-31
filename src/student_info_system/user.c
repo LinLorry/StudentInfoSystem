@@ -82,16 +82,18 @@ int add_user(const unsigned char level, const char *username, const char *passwo
 {
     int tmp;
     user_info *user_info_p;
+    user_info *last_user;
 
     if (user_number == user_infos_size && (tmp = expand_user_infos()))
     {
         fprintf(stderr, "[Add user]\tadd user fail.\n");
         return tmp;
     }
+    last_user = user_infos + (user_number - 1);
     user_info_p = user_infos + user_number;
 
     user_number++;
-    user_info_p->id = user_number;
+    user_info_p->id = last_user->id + 1;
     user_info_p->level = level;
     strcpy(user_info_p->username, username);
     strcpy(user_info_p->password, password);
