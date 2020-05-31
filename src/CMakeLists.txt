@@ -4,6 +4,7 @@ add_library(
     student_info_system/util.c
     student_info_system/init.c
     student_info_system/user.c
+    student_info_system/student.c
 )
 
 add_executable(main main.c)
