@@ -18,6 +18,12 @@
 
 #define EXPAND_STUDENT_SIZE 5
 
+#define COURSE_NAME_BUFFER_SIZE 256
+
+#define COURSE_NAME_MAX_LENGTH COURSE_NAME_BUFFER_SIZE - 1
+
+#define EXPAND_COURSE_SIZE 5
+
 struct Header
 {
     unsigned long user_number;
@@ -47,6 +53,12 @@ struct StudentInfo
     char name[STUDENT_NAME_BUFFER_SIZE];
 };
 
+struct Course
+{
+    unsigned long id;
+    char name[COURSE_NAME_BUFFER_SIZE];
+};
+
 typedef struct Header header;
 
 typedef struct UserInfo user_info;
@@ -54,5 +66,8 @@ typedef const struct UserInfo const_user_info;
 
 typedef struct StudentInfo student_info;
 typedef const struct StudentInfo const_student_info;
+
+typedef struct Course course;
+typedef const struct Course const_course;
 
 #endif // STUDENT_INFO_SYSTEM_TYPES_H
