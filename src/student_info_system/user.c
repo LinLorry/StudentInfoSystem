@@ -174,7 +174,4 @@ int update_user(
     return 0;
 }
 
-int free_user_infos()
-{
-    free(user_infos);
-}
+void free_user_infos() { free(user_infos); }

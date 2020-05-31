@@ -42,6 +42,6 @@ int update_user(
     const char *username, const char *password
 );
 
-int free_user_infos();
+void free_user_infos();
 
 #endif // STUDENT_INFO_SYSTEM_USER_H

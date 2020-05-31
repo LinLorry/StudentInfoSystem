@@ -169,4 +169,4 @@ int update_student(const unsigned long id, const char *name)
     return 0;
 }
 
-int free_student_infos() { free(students); }
+void free_student_infos() { free(students); }

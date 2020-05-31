@@ -32,6 +32,6 @@ int delete_student(const unsigned long id);
 
 int update_student(const unsigned long id, const char *name);
 
-int free_student_infos();
+void free_student_infos();
 
 #endif // STUDENT_INFO_SYSTEM_STUDENT_H
