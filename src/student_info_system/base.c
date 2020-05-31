@@ -7,6 +7,7 @@
 #include <student_info_system/types.h>
 #include <student_info_system/user.h>
 #include <student_info_system/student.h>
+#include <student_info_system/course.h>
 
 FILE *fp;
 header heade;
@@ -17,6 +18,7 @@ void free_all()
 {
     free_user_infos();
     free_student_infos();
+    free_courses();
 }
 
 int open_system(const char *username, const char *password)
@@ -75,6 +77,14 @@ int open_system(const char *username, const char *password)
         free_all();
         exit(EXIT_FAILURE);
     }
+    tmp = init_courses(fp, &heade);
+    if (tmp)
+    {
+        fprintf(stderr, "[Open system] init course info fail.\n");
+        fclose(fp);
+        free_all();
+        exit(EXIT_FAILURE);
+    }
 
     return 0;
 }
@@ -101,22 +111,33 @@ int close_system()
 
     heade.user_number = get_user_number();
     heade.student_number = get_student_number();
+    heade.course_number = get_course_number();
 
     if (fwrite(&heade, sizeof(header), 1, fp) != 1)
     {
         fprintf(stderr, "[Close system]\twrite head fail: %s\n", strerror(ferror(fp)));
+        fclose(fp);
         free_all();
         return -1;
     }
-    if (fwrite(get_user_infos(), sizeof(user_info), heade.user_number, fp) != get_user_number())
+    if (fwrite(get_user_infos(), sizeof(user_info), heade.user_number, fp) != heade.user_number)
     {
         fprintf(stderr, "[Close system]\twrite user info fail: %s\n", strerror(ferror(fp)));
+        fclose(fp);
         free_all();
         return -1;
     }
-    if (fwrite(get_students(), sizeof(student_info), heade.student_number, fp) != get_student_number())
+    if (fwrite(get_students(), sizeof(student_info), heade.student_number, fp) != heade.student_number)
     {
         fprintf(stderr, "[Close system]\twrite student info fail: %s\n", strerror(ferror(fp)));
+        fclose(fp);
+        free_all();
+        return -1;
+    }
+    if (fwrite(get_courses(), sizeof(course), heade.course_number, fp) != heade.course_number)
+    {
+        fprintf(stderr, "[Close system]\twrite course info fail: %s\n", strerror(ferror(fp)));
+        fclose(fp);
         free_all();
         return -1;
     }
