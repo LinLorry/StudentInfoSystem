@@ -20,4 +20,6 @@ int update_course(const unsigned long id, const char *name);
 
 void free_courses();
 
+const_course *get_course(const unsigned long id);
+
 #endif // STUDENT_INFO_SYSTEM_COURSE_H

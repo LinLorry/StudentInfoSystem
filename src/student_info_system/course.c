@@ -173,3 +173,17 @@ int update_course(const unsigned long id, const char *name)
 }
 
 void free_courses() { free(courses); }
+
+const_course *get_course(const unsigned long id)
+{
+    course const *course_end = courses + course_number;
+    for (course *course_p = courses; course_p != course_end; course_p++)
+    {
+        if (id == course_p->id)
+        {
+            return course_p;
+        }
+    }
+
+    return NULL;
+}

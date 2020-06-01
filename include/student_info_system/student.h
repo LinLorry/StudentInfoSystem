@@ -20,4 +20,6 @@ int update_student(const unsigned long id, const char *name);
 
 void free_student_infos();
 
+const_student_info *get_student(const unsigned long id);
+
 #endif // STUDENT_INFO_SYSTEM_STUDENT_H

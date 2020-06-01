@@ -170,3 +170,17 @@ int update_student(const unsigned long id, const char *name)
 }
 
 void free_student_infos() { free(students); }
+
+const_student_info *get_student(const unsigned long id)
+{
+    student_info const *student_info_end = students + student_number;
+    for (student_info *student_info_p = students; student_info_p != student_info_end; student_info_p++)
+    {
+        if (id == student_info_p->id)
+        {
+            return student_info_p;
+        }
+    }
+
+    return NULL;
+}
