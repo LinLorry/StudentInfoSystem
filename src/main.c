@@ -54,14 +54,17 @@ int student_manage();
 
 int course_manage();
 
+int grade_manage();
+
 int main_view()
 {
-    const menu menus[3] = {
+    const menu menus[4] = {
         {"user manage", user_manage},
         {"student manage", student_manage},
-        {"course manage", course_manage}
+        {"course manage", course_manage},
+        {"grade manage", grade_manage}
     };
-    return show_menu(menus, 3, NULL);
+    return show_menu(menus, 4, NULL);
 }
 
 int show_user();
@@ -407,6 +410,157 @@ int remove_course()
         if (!delete_course(id))
         {
             printf("Delete course success!\n");
+        }
+    }
+
+    printf("Press any key continue.");
+    CLEAR_STDIN();
+
+    return 0;
+}
+
+int show_grade();
+
+int create_grade();
+
+int remove_grade();
+
+int grade_manage()
+{
+    const menu menus[] = {
+        {"show grades", show_grade},
+        {"create grade", create_grade},
+        {"remove grade", remove_grade}};
+
+    if (ADMIN_LEVEL_VALUE == get_current_level())
+    {
+        return show_menu(menus, 3, NULL);
+    }
+    else
+    {
+        return show_menu(menus, 1, NULL);
+    }
+}
+
+int show_grade()
+{
+    const unsigned long grade_number = get_grade_number();
+    const_grade *grades = get_grades();
+    const_grade *grade_end = grades + grade_number;
+    const_grade *grade_p;
+
+    unsigned long student_id, course_id;
+
+    CLEAR();
+    print_grades();
+    printf("Press any key continue.");
+    CLEAR_STDIN();
+
+    return 0;
+}
+
+int create_grade()
+{
+    int tmp;
+    unsigned long student_id, course_id;
+    double value;
+    char tmp_str[256];
+    size_t index;
+
+    CLEAR();
+    printf("Students:\n");
+    print_students();
+    printf("Please student id: ");
+
+    tmp = scanf("%ld", &student_id);
+    CLEAR_STDIN();
+
+    while (tmp != 1 || student_id < 1)
+    {
+        printf("Please input valid student id: ");
+
+        tmp = scanf("%ld", &student_id);
+        CLEAR_STDIN();
+    }
+
+    printf("Course:\n");
+    print_courses();
+    printf("Please course id: ");
+
+    tmp = scanf("%ld", &course_id);
+    CLEAR_STDIN();
+
+    while (tmp != 1 || course_id < 1)
+    {
+        printf("Please input valid course id: ");
+
+        tmp = scanf("%ld", &course_id);
+        CLEAR_STDIN();
+    }
+
+    printf("Please input his grade: ");
+    tmp = scanf("%lf", &value);
+    CLEAR_STDIN();
+
+    while (tmp != 1 || value < 0)
+    {
+        printf("Please input valid value: ");
+
+        tmp = scanf("%lf", &value);
+        CLEAR_STDIN();
+    }
+
+    if (!add_grade(student_id, course_id, value))
+    {
+        printf("Create grade success\n");
+    }
+
+    printf("Press any key continue.");
+    CLEAR_STDIN();
+
+    return 0;
+}
+
+int remove_grade()
+{
+    unsigned long student_id, course_id;
+
+    int tmp;
+    long id;
+
+    CLEAR();
+
+    if (!print_grades())
+    {
+        printf("Please input student id: ");
+
+        tmp = scanf("%ld", &student_id);
+        CLEAR_STDIN();
+
+        while (tmp != 1 || student_id < 1)
+        {
+            printf("Please input valid student id: ");
+
+            tmp = scanf("%ld", &student_id);
+            CLEAR_STDIN();
+        }
+
+        printf("Please input course id: ");
+
+        tmp = scanf("%ld", &course_id);
+        CLEAR_STDIN();
+
+        while (tmp != 1 || course_id < 1)
+        {
+            printf("Please input valid course id: ");
+
+            tmp = scanf("%ld", &course_id);
+            CLEAR_STDIN();
+        }
+
+        if (!delete_grade(student_id, course_id))
+        {
+            printf("Delete grade success!\n");
         }
     }
 

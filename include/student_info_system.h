@@ -7,5 +7,6 @@
 #include <student_info_system/user.h>
 #include <student_info_system/student.h>
 #include <student_info_system/course.h>
+#include <student_info_system/grade.h>
 
 #endif // STUDENT_INFO_SYSTEM_H
