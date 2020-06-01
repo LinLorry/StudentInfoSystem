@@ -84,8 +84,8 @@ int add_user(const unsigned char level, const char *username, const char *passwo
     int tmp;
     user_info *user_info_p;
     user_info *last_user;
-    const_user_info *const user_info_end= user_infos + user_number;
-    
+    const_user_info *const user_info_end = user_infos + user_number;
+
     for (user_info_p = user_infos; user_info_p != user_info_end; ++user_info_p)
     {
         if (!strcmp(username, user_info_p->username))
@@ -153,10 +153,11 @@ int update_user(
     const unsigned long id, const unsigned char level,
     const char *username, const char *password)
 {
-    user_info *user_info_p = user_infos;
-    const user_info *user_info_end = user_infos + user_number - 1;
+    user_info *update_user_p = NULL;
+    user_info *user_info_p;
+    const_user_info *const user_info_end = user_infos + user_number;
 
-    if (id > user_info_end->id)
+    if (id > (user_info_end - 1)->id)
     {
         fprintf(stderr,
                 "[Update user]\t"
@@ -165,12 +166,28 @@ int update_user(
         return -1;
     }
 
-    while (user_info_p < user_info_end && id != user_info_p->id)
+    for (user_info_p = user_infos; user_info_p != user_info_end; user_info_p++)
     {
-        user_info_p++;
+        if (id == user_info_p->id)
+        {
+            update_user_p = user_info_p;
+        }
+        else if (username != NULL && !strcmp(username, user_info_p->username))
+        {
+            break;
+        }
     }
 
-    if (user_info_end == user_info_p && id != user_info_p->id)
+    if (user_info_p != user_info_end)
+    {
+        fprintf(stderr,
+                "[Update user]\t"
+                "update user fail, username '%s' exist.\n",
+                username);
+        return -1;
+    }
+
+    if (NULL == update_user_p)
     {
         fprintf(stderr,
                 "[Update user]\t"
@@ -180,11 +197,11 @@ int update_user(
     }
 
     if (level != NULL_LEVEL_VALUE)
-        user_info_p->level = level;
+        update_user_p->level = level;
     if (username != NULL)
-        strcpy(user_info_p->username, username);
+        strcpy(update_user_p->username, username);
     if (password != NULL)
-        strcpy(user_info_p->password, password);
+        strcpy(update_user_p->password, password);
 
     return 0;
 }
