@@ -110,69 +110,72 @@ int close_system()
         return -1;
     }
 
-    if ((fp = fopen(DATA_TMP_FILE_NAME, "wb")) == NULL)
+    if (ADMIN_LEVEL_VALUE == get_current_level())
     {
-        perror("[Close system]\t"
-               "Open data tmp file failed: ");
-        free_user_infos();
-        return -1;
-    }
+        if ((fp = fopen(DATA_TMP_FILE_NAME, "wb")) == NULL)
+        {
+            perror("[Close system]\t"
+                   "Open data tmp file failed: ");
+            free_user_infos();
+            return -1;
+        }
 
-    heade.user_number = get_user_number();
-    heade.student_number = get_student_number();
-    heade.course_number = get_course_number();
-    heade.grade_number = get_grade_number();
+        heade.user_number = get_user_number();
+        heade.student_number = get_student_number();
+        heade.course_number = get_course_number();
+        heade.grade_number = get_grade_number();
 
-    if (fwrite(&heade, sizeof(header), 1, fp) != 1)
-    {
-        fprintf(stderr, "[Close system]\twrite head fail: %s\n", strerror(ferror(fp)));
-        fclose(fp);
-        free_all();
-        return -1;
-    }
-    if (fwrite(get_user_infos(), sizeof(user_info), heade.user_number, fp) != heade.user_number)
-    {
-        fprintf(stderr, "[Close system]\twrite user info fail: %s\n", strerror(ferror(fp)));
-        fclose(fp);
-        free_all();
-        return -1;
-    }
-    if (fwrite(get_students(), sizeof(student_info), heade.student_number, fp) != heade.student_number)
-    {
-        fprintf(stderr, "[Close system]\twrite student info fail: %s\n", strerror(ferror(fp)));
-        fclose(fp);
-        free_all();
-        return -1;
-    }
-    if (fwrite(get_courses(), sizeof(course), heade.course_number, fp) != heade.course_number)
-    {
-        fprintf(stderr, "[Close system]\twrite course info fail: %s\n", strerror(ferror(fp)));
-        fclose(fp);
-        free_all();
-        return -1;
-    }
-    if (fwrite(get_grades(), sizeof(grade), heade.grade_number, fp) != heade.grade_number)
-    {
-        fprintf(stderr, "[Close system]\twrite grade info fail: %s\n", strerror(ferror(fp)));
-        fclose(fp);
-        free_all();
-        return -1;
-    }
+        if (fwrite(&heade, sizeof(header), 1, fp) != 1)
+        {
+            fprintf(stderr, "[Close system]\twrite head fail: %s\n", strerror(ferror(fp)));
+            fclose(fp);
+            free_all();
+            return -1;
+        }
+        if (fwrite(get_user_infos(), sizeof(user_info), heade.user_number, fp) != heade.user_number)
+        {
+            fprintf(stderr, "[Close system]\twrite user info fail: %s\n", strerror(ferror(fp)));
+            fclose(fp);
+            free_all();
+            return -1;
+        }
+        if (fwrite(get_students(), sizeof(student_info), heade.student_number, fp) != heade.student_number)
+        {
+            fprintf(stderr, "[Close system]\twrite student info fail: %s\n", strerror(ferror(fp)));
+            fclose(fp);
+            free_all();
+            return -1;
+        }
+        if (fwrite(get_courses(), sizeof(course), heade.course_number, fp) != heade.course_number)
+        {
+            fprintf(stderr, "[Close system]\twrite course info fail: %s\n", strerror(ferror(fp)));
+            fclose(fp);
+            free_all();
+            return -1;
+        }
+        if (fwrite(get_grades(), sizeof(grade), heade.grade_number, fp) != heade.grade_number)
+        {
+            fprintf(stderr, "[Close system]\twrite grade info fail: %s\n", strerror(ferror(fp)));
+            fclose(fp);
+            free_all();
+            return -1;
+        }
 
-    if (fclose(fp))
-    {
-        perror("[Close system]\t"
-               "Close tmp file error: ");
-        free_all();
-        return -1;
-    }
+        if (fclose(fp))
+        {
+            perror("[Close system]\t"
+                   "Close tmp file error: ");
+            free_all();
+            return -1;
+        }
 
-    if (rename(DATA_TMP_FILE_NAME, DATA_FILE_NAME))
-    {
-        perror("[Close system]\t"
-               "Rename data tmp file to data file failed: ");
-        free_all();
-        return -1;
+        if (rename(DATA_TMP_FILE_NAME, DATA_FILE_NAME))
+        {
+            perror("[Close system]\t"
+                   "Rename data tmp file to data file failed: ");
+            free_all();
+            return -1;
+        }
     }
 
     free_all();
