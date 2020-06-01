@@ -84,12 +84,23 @@ int add_user(const unsigned char level, const char *username, const char *passwo
     int tmp;
     user_info *user_info_p;
     user_info *last_user;
+    const_user_info *const user_info_end= user_infos + user_number;
+    
+    for (user_info_p = user_infos; user_info_p != user_info_end; ++user_info_p)
+    {
+        if (!strcmp(username, user_info_p->username))
+        {
+            fprintf(stderr, "[Add user]\tusername '%s' exist, add user fail.\n", username);
+            return -1;
+        }
+    }
 
     if (user_number == user_infos_size && (tmp = expand_user_infos()))
     {
         fprintf(stderr, "[Add user]\tadd user fail.\n");
         return tmp;
     }
+
     user_info_p = user_infos + user_number;
     last_user = user_info_p - 1;
 
