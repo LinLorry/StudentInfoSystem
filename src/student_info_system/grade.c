@@ -163,12 +163,6 @@ int update_grade(const unsigned long student_id, const unsigned long crouse_id, 
 
     if (grade_p == grade_end)
     {
-
-        grade_p->value = value;
-        return 0;
-    }
-    else
-    {
         fprintf(stderr,
                 "[Delete grade]\t"
                 "delete grade fail, student with ID %ld does have crouse with ID &ld.\n",
@@ -176,6 +170,8 @@ int update_grade(const unsigned long student_id, const unsigned long crouse_id, 
         );
         return -1;
     }
+
+    grade_p->value = value;
 
     return 0;
 }
