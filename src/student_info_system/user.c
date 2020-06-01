@@ -176,3 +176,17 @@ int update_user(
 }
 
 void free_user_infos() { free(user_infos); }
+
+const_user_info *get_user(const unsigned long id)
+{
+    user_info const *user_info_end = user_infos + user_number;
+    for (user_info *user_info_p = user_infos; user_info_p != user_info_end; user_info_p++)
+    {
+        if (id == user_info_p->id)
+        {
+            return user_info_p;
+        }
+    }
+
+    return NULL;
+}

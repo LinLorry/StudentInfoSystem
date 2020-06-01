@@ -23,4 +23,6 @@ int update_user(
 
 void free_user_infos();
 
+const_user_info *get_user(const unsigned long id);
+
 #endif // STUDENT_INFO_SYSTEM_USER_H
