@@ -243,10 +243,14 @@ int print_grades()
     {
         student_info_p = get_student(grade_p->student_id);
         course_p = get_course(grade_p->course_id);
-        printf("|%11ld\t%14s\t%9ld\t%11s\t%6.2lf|\n",
-               student_info_p->id, student_info_p->name,
-               course_p->id, course_p->name,
-               grade_p->value);
+        if (student_info_p != NULL && course_p != NULL)
+        {
+            printf("|%11ld\t%14s\t%9ld\t%11s\t%6.2lf|\n",
+                   student_info_p->id, student_info_p->name,
+                   course_p->id, course_p->name,
+                   grade_p->value
+            );
+        }
     }
     printf("+---------------------------------------------------------------------+\n");
 

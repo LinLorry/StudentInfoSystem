@@ -85,16 +85,15 @@ int update_course_view()
 
     printf("Please input course id which you want to update: ");
     tmp = scanf("%ld", &id);
-    CLEAR_STDIN();
+    CLEAR_STDIN();    
 
-    while (tmp != 1 || id < 1)
+    while (tmp != 1 || id < 1 || (course_info_p = get_course(id)) == NULL)
     {
         printf("Please input valid id: ");
 
         tmp = scanf("%ld", &id);
         CLEAR_STDIN();
     }
-    course_info_p = get_course(id);
 
     printf("User original info:\nname: %s\n", course_info_p->name);
 

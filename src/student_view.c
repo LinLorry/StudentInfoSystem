@@ -86,14 +86,13 @@ int update_student_view()
     tmp = scanf("%ld", &id);
     CLEAR_STDIN();
 
-    while (tmp != 1 || id < 1)
+    while (tmp != 1 || id < 1 || (student_info_p = get_student(id)) == NULL)
     {
         printf("Please input valid id: ");
 
         tmp = scanf("%ld", &id);
         CLEAR_STDIN();
     }
-    student_info_p = get_student(id);
 
     printf("User original info:\nname: %s\n", student_info_p->name);
 

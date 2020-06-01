@@ -117,14 +117,14 @@ int update_user_view()
     tmp = scanf("%ld", &id);
     CLEAR_STDIN();
 
-    while (tmp != 1 || id < 1)
+    while (tmp != 1 || id < 1 || (user_info_p = get_user(id)) == NULL)
     {
         printf("Please input valid id: ");
 
         tmp = scanf("%ld", &id);
         CLEAR_STDIN();
     }
-    user_info_p = get_user(id);
+
     level = user_info_p->level;
 
     printf(
