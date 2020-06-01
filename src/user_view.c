@@ -158,7 +158,13 @@ int update_user_view()
         tmp_str
     );
 
-    tmp = update_user(id, level, username, NULL);
+    if (!update_user(id, level, username, NULL))
+    {
+        printf("Update user success!\n");
+    }
+
+    printf("Press any key continue.");
+    CLEAR_STDIN();
 
     return 0;
 }
@@ -193,8 +199,13 @@ int change_password_view()
         tmp_str
     );
 
-    tmp = update_user(id, NULL_LEVEL_VALUE, NULL, password);
+    if (!update_user(id, NULL_LEVEL_VALUE, NULL, password))
+    {
+        printf("Update password success!\n");
+    }
 
+    printf("Press any key continue.");
+    CLEAR_STDIN();
     return 0;
 }
 
