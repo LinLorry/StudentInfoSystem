@@ -10,6 +10,8 @@ int show_student();
 
 int create_student();
 
+int update_student_view();
+
 int remove_student();
 
 int student_manage()
@@ -17,12 +19,13 @@ int student_manage()
     const menu menus[] = {
         {"show students", show_student},
         {"create student", create_student},
-        {"remove student", remove_student}
+        {"update student", update_student_view},
+        {"remove student", remove_student},
     };
 
     if (ADMIN_LEVEL_VALUE == get_current_level())
     {
-        return show_menu(menus, 3, NULL);
+        return show_menu(menus, 4, NULL);
     }
     else
     {
@@ -57,6 +60,50 @@ int create_student()
     if (!add_student(name))
     {
         printf("Create student success\n");
+    }
+
+    printf("Press any key continue.");
+    CLEAR_STDIN();
+
+    return 0;
+}
+
+int update_student_view()
+{
+    int tmp;
+    unsigned long id;
+    char tmp_str[256];
+    char name[STUDENT_NAME_BUFFER_SIZE];
+    const_student_info *student_info_p;
+
+    CLEAR();
+    print_students();
+
+    printf("Please input student id which you want to update: ");
+    tmp = scanf("%ld", &id);
+    CLEAR_STDIN();
+
+    while (tmp != 1 || id < 1)
+    {
+        printf("Please input valid id: ");
+
+        tmp = scanf("%ld", &id);
+        CLEAR_STDIN();
+    }
+    student_info_p = get_student(id);
+
+    printf("User original info:\nname: %s\n", student_info_p->name);
+
+    sprintf(tmp_str, "Student name length must less then %d\n", STUDENT_NAME_MAX_LENGTH);
+    input_str(
+        name, STUDENT_NAME_MAX_LENGTH,
+        "Please input new name: ",
+        "Please input new name again: ",
+        tmp_str);
+
+    if (!update_student(id, name))
+    {
+        printf("Update student success!\n");
     }
 
     printf("Press any key continue.");
