@@ -9,6 +9,6 @@ add_library(
     student_info_system/grade.c
 )
 
-add_executable(main main.c)
+add_executable(main main.c util.c)
 
 target_link_libraries(main student_info_system)

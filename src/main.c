@@ -5,6 +5,8 @@
 
 #include <student_info_system.h>
 
+#include <util.h>
+
 int main_view();
 
 int main(int argc, char *args[])
@@ -252,30 +254,8 @@ int student_manage()
 
 int show_student()
 {
-    const unsigned long student_number = get_student_number();
-    const_student_info *students = get_students();
-    const_student_info *student_end = students + student_number;
-    const_student_info *student_p;
-
     CLEAR();
-
-    if (student_number == 0)
-    {
-        printf("Don't have student!\n");
-    }
-    else
-    {
-        printf("+-----------------+\n");
-        printf("| Id \t   Name   |\n");
-        printf("+-----------------+\n");
-
-        for (student_p = students; student_p != student_end; ++student_p)
-        {
-            printf("|%4ld\t%10s|\n", student_p->id, student_p->name);
-        }
-        printf("+-----------------+\n");
-    }
-
+    print_students();
     printf("Press any key continue.");
     CLEAR_STDIN();
 
@@ -311,48 +291,29 @@ int create_student()
 
 int remove_student()
 {
-    const unsigned long student_number = get_student_number();
-    const_student_info *const students = get_students();
-    const_student_info *const student_end = students + student_number;
-    const_student_info *student_p;
-
     int tmp;
     long id;
 
     CLEAR();
 
-    if (student_number == 0)
+    if (!print_students())
     {
-        printf("Don't have student!\nPress any key continue.");
-        CLEAR_STDIN();
-        return 0;
-    }
-
-    printf("+-----------------+\n");
-    printf("| Id \t   Name   |\n");
-    printf("+-----------------+\n");
-
-    for (student_p = students; student_p != student_end; ++student_p)
-    {
-        printf("|%4ld\t%10s|\n", student_p->id, student_p->name);
-    }
-    printf("+-----------------+\n");
-
-    printf("Please input student id which you want to remove: ");
-    tmp = scanf("%ld", &id);
-    CLEAR_STDIN();
-
-    while (tmp != 1 || id < 1)
-    {
-        printf("Please input valid id: ");
-
+        printf("Please input student id which you want to remove: ");
         tmp = scanf("%ld", &id);
         CLEAR_STDIN();
-    }
 
-    if (!delete_student(id))
-    {
-        printf("Delete student success!\n");
+        while (tmp != 1 || id < 1)
+        {
+            printf("Please input valid id: ");
+
+            tmp = scanf("%ld", &id);
+            CLEAR_STDIN();
+        }
+
+        if (!delete_student(id))
+        {
+            printf("Delete student success!\n");
+        }
     }
 
     printf("Press any key continue.");
@@ -360,6 +321,7 @@ int remove_student()
 
     return 0;
 }
+
 int show_course();
 
 int create_course();
@@ -386,29 +348,8 @@ int course_manage()
 
 int show_course()
 {
-    const unsigned long course_number = get_course_number();
-    const_course *courses = get_courses();
-    const_course *course_end = courses + course_number;
-    const_course *course_p;
     CLEAR();
-
-    if (course_number == 0)
-    {
-        printf("Don't have course!\n");
-    }
-    else
-    {
-        printf("+-----------------+\n");
-        printf("| Id \t   Name   |\n");
-        printf("+-----------------+\n");
-
-        for (course_p = courses; course_p != course_end; ++course_p)
-        {
-            printf("|%4ld\t%10s|\n", course_p->id, course_p->name);
-        }
-        printf("+-----------------+\n");
-    }
-
+    print_courses();
     printf("Press any key continue.");
     CLEAR_STDIN();
 
@@ -444,48 +385,29 @@ int create_course()
 
 int remove_course()
 {
-    const unsigned long course_number = get_course_number();
-    const_course *const courses = get_courses();
-    const_course *const course_end = courses + course_number;
-    const_course *course_p;
-
     int tmp;
     long id;
 
     CLEAR();
 
-    if (course_number == 0)
+    if (!print_courses())
     {
-        printf("Don't have course!\nPress any key continue.");
-        CLEAR_STDIN();
-        return 0;
-    }
-
-    printf("+-----------------+\n");
-    printf("| Id \t   Name   |\n");
-    printf("+-----------------+\n");
-
-    for (course_p = courses; course_p != course_end; ++course_p)
-    {
-        printf("|%4ld\t%10s|\n", course_p->id, course_p->name);
-    }
-    printf("+-----------------+\n");
-
-    printf("Please input course id which you want to remove: ");
-    tmp = scanf("%ld", &id);
-    CLEAR_STDIN();
-
-    while (tmp != 1 || id < 1)
-    {
-        printf("Please input valid id: ");
-
+        printf("Please input course id which you want to remove: ");
         tmp = scanf("%ld", &id);
         CLEAR_STDIN();
-    }
 
-    if (!delete_course(id))
-    {
-        printf("Delete course success!\n");
+        while (tmp != 1 || id < 1)
+        {
+            printf("Please input valid id: ");
+
+            tmp = scanf("%ld", &id);
+            CLEAR_STDIN();
+        }
+
+        if (!delete_course(id))
+        {
+            printf("Delete course success!\n");
+        }
     }
 
     printf("Press any key continue.");
