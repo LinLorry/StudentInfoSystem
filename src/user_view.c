@@ -26,7 +26,7 @@ int user_manage()
         {"create user", create_user},
         {"update user", update_user_view},
         {"change password", change_password_view},
-        {"remove user", remove_user}
+        {"remove user", remove_user},
     };
 
     if (ADMIN_LEVEL_VALUE == get_current_level())
@@ -42,6 +42,7 @@ int user_manage()
 int show_user()
 {
     CLEAR();
+    printf("Show User:\n");
     print_users();
     printf("Press any key continue.");
     CLEAR_STDIN();
@@ -58,6 +59,7 @@ int create_user()
     char password[PASSWORD_BUFFER_SIZE];
 
     CLEAR();
+    printf("Create User:\n");
 
     printf("What type user you want to create(Admin or User)? [a/U]: ");
     tmp = getchar();
@@ -108,6 +110,7 @@ int update_user_view()
     const_user_info *user_info_p;
 
     CLEAR();
+    printf("Update User:\n");
     print_users();
 
     printf("Please input user id which you want to update: ");
@@ -177,6 +180,7 @@ int change_password_view()
     char password[PASSWORD_BUFFER_SIZE];
 
     CLEAR();
+    printf("Change Password:\n");
     print_users();
 
     printf("Please input user id which you want to update: ");
@@ -214,6 +218,9 @@ int remove_user()
     int tmp;
     long id;
     const unsigned long current_id = get_current_id();
+
+    CLEAR();
+    printf("Remove User:\n");
 
     print_users();
 

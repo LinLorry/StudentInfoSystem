@@ -38,6 +38,7 @@ int grade_manage()
 int show_grade()
 {
     CLEAR();
+    printf("Show Grade:\n");
     print_grades();
     printf("Press any key continue.");
     CLEAR_STDIN();
@@ -53,6 +54,7 @@ int create_grade()
     size_t index;
 
     CLEAR();
+    printf("Create Grade:\n");
     printf("Students:\n");
     print_students();
     printf("Please input student id: ");
@@ -114,6 +116,8 @@ int update_grade_view()
     size_t index;
 
     CLEAR();
+    printf("Update Grade:\n");
+
     if (!print_grades())
     {
         printf("Please input student id: ");
@@ -174,6 +178,7 @@ int remove_grade()
     long id;
 
     CLEAR();
+    printf("Remove Grade:\n");
 
     if (!print_grades())
     {

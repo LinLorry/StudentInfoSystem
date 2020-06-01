@@ -36,6 +36,7 @@ int student_manage()
 int show_student()
 {
     CLEAR();
+    printf("Show Student:\n");
     print_students();
     printf("Press any key continue.");
     CLEAR_STDIN();
@@ -49,6 +50,7 @@ int create_student()
     char name[STUDENT_NAME_BUFFER_SIZE];
 
     CLEAR();
+    printf("Create Student:\n");
 
     sprintf(tmp_str, "Student name length must less then %d\n", STUDENT_NAME_MAX_LENGTH);
     input_str(
@@ -77,6 +79,7 @@ int update_student_view()
     const_student_info *student_info_p;
 
     CLEAR();
+    printf("Update Student:\n");
     print_students();
 
     printf("Please input student id which you want to update: ");
@@ -118,6 +121,7 @@ int remove_student()
     long id;
 
     CLEAR();
+    printf("Remove Student:\n");
 
     if (!print_students())
     {

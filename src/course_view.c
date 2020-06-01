@@ -36,6 +36,7 @@ int course_manage()
 int show_course()
 {
     CLEAR();
+    printf("Show Course:\n");
     print_courses();
     printf("Press any key continue.");
     CLEAR_STDIN();
@@ -49,6 +50,7 @@ int create_course()
     char name[COURSE_NAME_BUFFER_SIZE];
 
     CLEAR();
+    printf("Create Course:\n");
 
     sprintf(tmp_str, "Course name length must less then %d\n", COURSE_NAME_MAX_LENGTH);
     input_str(
@@ -78,6 +80,7 @@ int update_course_view()
     const_course *course_info_p;
 
     CLEAR();
+    printf("Update Course:\n");
     print_courses();
 
     printf("Please input course id which you want to update: ");
@@ -119,6 +122,7 @@ int remove_course()
     long id;
 
     CLEAR();
+    printf("Remove Course:\n");
 
     if (!print_courses())
     {
