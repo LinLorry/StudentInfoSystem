@@ -1,10 +1,38 @@
 #include <stdio.h>
 
+#include <student_info_system/user.h>
 #include <student_info_system/student.h>
 #include <student_info_system/course.h>
 #include <student_info_system/grade.h>
 
 #include <util.h>
+
+const char admin_str[] = "Admin";
+const char user_str[] = "User";
+
+int print_users()
+{
+    const unsigned long user_number = get_user_number();
+    const_user_info *user_infos = get_user_infos();
+    const_user_info *user_info_end = user_infos + user_number;
+    const_user_info *user_info_p;
+
+    printf("+-------------------------+\n");
+    printf("|  id\t  type\t  username|\n");
+    printf("+-------------------------+\n");
+
+    for (user_info_p = user_infos; user_info_p != user_info_end; ++user_info_p)
+    {
+        printf(
+            "|%4ld\t%6s\t%10s|\n",
+            user_info_p->id,
+            user_info_p->level == ADMIN_LEVEL_VALUE ? admin_str : user_str,
+            user_info_p->username);
+    }
+    printf("+-------------------------+\n");
+
+    return 0;
+}
 
 int print_students()
 {

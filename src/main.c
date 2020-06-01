@@ -93,31 +93,8 @@ int user_manage()
 
 int show_user()
 {
-    const unsigned long user_number = get_user_number();
-    const_user_info *user_infos = get_user_infos();
-    const_user_info *user_info_end = user_infos + user_number;
-    const_user_info *user_info_p;
-
-    const char admin_str[] = "Admin";
-    const char user_str[] = "User";
-
     CLEAR();
-
-    printf("+-------------------------+\n");
-    printf("| Id \t Type \t Username |\n");
-    printf("+-------------------------+\n");
-
-    for (user_info_p = user_infos; user_info_p != user_info_end; ++user_info_p)
-    {
-        printf(
-            "|%4ld\t%6s\t%10s|\n",
-            user_info_p->id,
-            user_info_p->level == ADMIN_LEVEL_VALUE ? admin_str : user_str,
-            user_info_p->username
-        );
-    }
-    printf("+-------------------------+\n");
-
+    print_users();
     printf("Press any key continue.");
     CLEAR_STDIN();
 
@@ -176,32 +153,11 @@ int create_user()
 
 int remove_user()
 {
-    const unsigned long current_id = get_current_id();
-    const unsigned long user_number = get_user_number();
-    const_user_info *const user_infos = get_user_infos();
-    const_user_info *const user_info_end = user_infos + user_number;
-    const_user_info *user_info_p;
-
-    const char admin_str[] = "Admin";
-    const char user_str[] = "User";
-
     int tmp;
     long id;
+    const unsigned long current_id = get_current_id();
 
-    printf("+-------------------------+\n");
-    printf("| Id \t Type \t Username |\n");
-    printf("+-------------------------+\n");
-
-    for (user_info_p = user_infos; user_info_p != user_info_end; ++user_info_p)
-    {
-        printf(
-            "|%4ld\t%6s\t%10s|\n",
-            user_info_p->id,
-            user_info_p->level == ADMIN_LEVEL_VALUE ? admin_str : user_str,
-            user_info_p->username
-        );
-    }
-    printf("+-------------------------+\n");
+    print_users();
 
     printf("Please input user id which you want to remove: ");
     tmp = scanf("%ld", &id);
