@@ -52,7 +52,7 @@ int create_grade()
     CLEAR();
     printf("Students:\n");
     print_students();
-    printf("Please student id: ");
+    printf("Please input student id: ");
 
     tmp = scanf("%ld", &student_id);
     CLEAR_STDIN();
@@ -67,7 +67,7 @@ int create_grade()
 
     printf("Course:\n");
     print_courses();
-    printf("Please course id: ");
+    printf("Please input course id: ");
 
     tmp = scanf("%ld", &course_id);
     CLEAR_STDIN();
