@@ -99,7 +99,7 @@ int add_grade(const unsigned long student_id, const unsigned long crouse_id, con
 
     for (grade_p = grades; grade_p != grade_end; grade_p++)
     {
-        if (grade_p->student_id == student_id && grade_p->course_id)
+        if (grade_p->student_id == student_id && grade_p->course_id == crouse_id)
         {
             break;
         }
