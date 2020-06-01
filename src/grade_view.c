@@ -14,12 +14,15 @@ int create_grade();
 
 int update_grade_view();
 
+int query_grade_by_student();
+
 int remove_grade();
 
 int grade_manage()
 {
     const menu menus[] = {
         {"show grades", show_grade},
+        {"query grade by student", query_grade_by_student},
         {"create grade", create_grade},
         {"update grade", update_grade_view},
         {"remove grade", remove_grade},
@@ -27,11 +30,11 @@ int grade_manage()
 
     if (ADMIN_LEVEL_VALUE == get_current_level())
     {
-        return show_menu(menus, 4, NULL);
+        return show_menu(menus, 5, NULL);
     }
     else
     {
-        return show_menu(menus, 1, NULL);
+        return show_menu(menus, 2, NULL);
     }
 }
 
@@ -170,6 +173,59 @@ int update_grade_view()
     return 0;
 }
 
+int query_grade_by_student()
+{
+    int tmp;
+    unsigned long student_id;
+    const unsigned long grade_number = get_grade_number();
+
+    const_grade *grades = get_grades();
+    const_grade *grade_end = grades + grade_number;
+    const_grade *grade_p;
+
+    const_student_info *student;
+    const_course *course_p;
+
+    CLEAR();
+    printf("Query Grade By Student:\n");
+    if (!print_students())
+    {
+        printf("Please input student id which you want to remove: ");
+        tmp = scanf("%ld", &student_id);
+        CLEAR_STDIN();
+
+        while (tmp != 1 || student_id < 1 || (student = get_student(student_id)) == NULL)
+        {
+            printf("Please input valid id: ");
+
+            tmp = scanf("%ld", &student_id);
+            CLEAR_STDIN();
+        }
+
+        printf("Student %s grade:\n", student->name);
+        printf("+---------------------+\n");
+        printf("|course\tname\t grade|\n");
+        printf("+---------------------+\n");
+
+        for (grade_p = grades; grade_p != grade_end; ++grade_p)
+        {
+            if (grade_p->student_id == student_id)
+            {
+                if ((course_p = get_course(grade_p->course_id)) != NULL)
+                {
+                    printf("|%11s\t%6.2lf|\n", course_p->name, grade_p->value);
+                }
+            }
+        }
+        printf("+---------------------+\n");
+    }
+
+    printf("Press any key continue.");
+    CLEAR_STDIN();
+
+    return 0;
+}
+
 int remove_grade()
 {
     unsigned long student_id, course_id;
@@ -248,8 +304,7 @@ int print_grades()
             printf("|%11ld\t%14s\t%9ld\t%11s\t%6.2lf|\n",
                    student_info_p->id, student_info_p->name,
                    course_p->id, course_p->name,
-                   grade_p->value
-            );
+                   grade_p->value);
         }
     }
     printf("+---------------------------------------------------------------------+\n");
