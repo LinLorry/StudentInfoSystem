@@ -168,9 +168,12 @@ int update_user(
         return -1;
     }
 
-    user_info_p->level = level;
-    strcpy(user_info_p->username, username);
-    strcpy(user_info_p->password, password);
+    if (level != NULL_LEVEL_VALUE)
+        user_info_p->level = level;
+    if (username != NULL)
+        strcpy(user_info_p->username, username);
+    if (password != NULL)
+        strcpy(user_info_p->password, password);
 
     return 0;
 }
