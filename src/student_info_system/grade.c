@@ -165,7 +165,7 @@ int update_grade(const unsigned long student_id, const unsigned long crouse_id, 
     {
         fprintf(stderr,
                 "[Delete grade]\t"
-                "delete grade fail, student with ID %ld does have crouse with ID &ld.\n",
+                "delete grade fail, student with ID %ld does have crouse with ID %ld.\n",
                 student_id, crouse_id
         );
         return -1;

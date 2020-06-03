@@ -190,7 +190,7 @@ int query_grade_by_student()
     printf("Query Grade By Student:\n");
     if (!print_students())
     {
-        printf("Please input student id which you want to remove: ");
+        printf("Please input the student id whose grade you want to get: ");
         tmp = scanf("%ld", &student_id);
         CLEAR_STDIN();
 
