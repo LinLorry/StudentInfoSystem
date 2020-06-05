@@ -30,16 +30,9 @@
 struct Header
 {
     unsigned long user_number;
-    unsigned long user_list_index;
-
     unsigned long student_number;
-    unsigned long student_list_index;
-
     unsigned long course_number;
-    unsigned long course_list_index;
-
     unsigned long grade_number;
-    unsigned long grade_list_index;
 };
 
 struct UserInfo
